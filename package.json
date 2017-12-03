@@ -1,0 +1,23 @@
+{
+  "name": "prettier-compare",
+  "version": "1.0.0",
+  "description": "Command line tool compare Prettier output for an entire project",
+  "main": "src/index.js",
+  "bin": {
+    "prettier-compare": "./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gregwilton/prettier-compare.git"
+  },
+  "author": "Greg Wilton",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "child-process-promise": "^2.2.1",
+    "command-exists": "^1.2.2",
+    "fs-extra": "^4.0.2",
+    "prettier": "^1.8.2",
+    "yargs": "^10.0.3"
+  }
+}
