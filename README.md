@@ -26,7 +26,7 @@ Not passing the `config` argument will call Prettier with the `no-config`
 option.
 
 ```
-prettier-compare --src /Git/my-project --dest /Temp/output --config /Git/my-project/prettier.config.js
+prettier-compare --src /Git/my-project --dest /Temp/output
 ```
 
 ## Command line arguments
