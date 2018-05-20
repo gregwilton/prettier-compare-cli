@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const fs = require('fs-extra');
 const exec = require('child-process-promise').exec;
 const commandExistsWithThrow = require('command-exists');
@@ -10,6 +11,11 @@ function commandExists(command) {
 }
 
 async function validateEnvironment(dest) {
+  if (!await commandExists('prettier')) {
+    console.warn('Prettier could not be found; Exiting application.');
+    process.exit(1);
+  }
+
   if (!await commandExists('meld')) {
     console.warn('Meld could not be found; Exiting application.');
     process.exit(1);
@@ -28,11 +34,11 @@ function getSourceFilter() {
   return filter;
 }
 
-async function getPrettierCommand(src, dest, config) {
-  const runCommand = (await commandExists('yarn')) ? 'yarn' : 'npm';
+async function getPrettierCommand(src, dest, config, extensions) {
   const configArg = config ? `--config "${config}"` : '--no-config';
+  const destGlob = `${dest}/**/*.{${extensions}}`;
 
-  return `${runCommand} run prettier ${configArg} --write "${dest}/**/*.*"`;
+  return `prettier ${configArg} --write "${destGlob}"`;
 }
 
 async function main() {
@@ -44,16 +50,20 @@ async function main() {
     .describe('d', 'Path to destination directory')
     .alias('c', 'config')
     .describe('c', 'Path to the Prettier config file')
+    .alias('e', 'extensions')
+    .describe('e', 'Comma separated list of extensions')
+    .default('e', 'js,jsx,ts,json,css,scss,less')
     .demand(['s', 'd'])
     .help('h')
     .alias('h', 'help')
     .argv;
+  const { src, dest, config, extensions } = argv;
 
-  await validateEnvironment(argv.dest);
-  await fs.emptyDir(argv.dest);
-  await fs.copy(argv.src, argv.dest, { filter: getSourceFilter() });
-  await exec(await getPrettierCommand(argv.src, argv.dest, argv.config));
-  await exec(`meld "${argv.src}" "${argv.dest}"`);
+  await validateEnvironment(dest);
+  await fs.emptyDir(dest);
+  await fs.copy(src, dest, { filter: getSourceFilter() });
+  await exec(await getPrettierCommand(src, dest, config, extensions));
+  await exec(`meld "${src}" "${dest}"`);
 }
 
 main()

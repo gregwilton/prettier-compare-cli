@@ -1,6 +1,6 @@
 {
   "name": "prettier-compare",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Command line tool compare Prettier output for an entire project",
   "main": "src/index.js",
   "bin": {
@@ -13,11 +13,13 @@
   "author": "Greg Wilton",
   "license": "MIT",
   "private": true,
+  "engines" : {
+    "node" : ">=7.10.1"
+  },
   "dependencies": {
     "child-process-promise": "^2.2.1",
     "command-exists": "^1.2.2",
     "fs-extra": "^4.0.2",
-    "prettier": "^1.8.2",
     "yargs": "^10.0.3"
   }
 }

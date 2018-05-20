@@ -12,7 +12,9 @@ comparison mode so a diff of all files can be viewed.
 yarn global add git+https://github.com/gregwilton/prettier-compare.git
 ```
 
-[Meld](http://meldmerge.org/) must be also installed and available on the path.
+The following applications must be available on the path:
+- [Prettier](https://github.com/prettier/prettier)
+- [Meld](http://meldmerge.org/)
 
 ## Example usage
 
@@ -29,10 +31,17 @@ option.
 prettier-compare --src /Git/my-project --dest /Temp/output
 ```
 
+Specify that Prettier should only be called on js and jsx files.
+
+```
+prettier-compare --src /Git/my-project --dest /Temp/output --extensions js,jsx
+```
+
 ## Command line arguments
 
-Argument | Description
----------| ----------------------------------------------
-src      | Path to source directory
-dest     | Path to destination directory
-config   | Path to the Prettier config file (optional)
+Argument   | Description
+---------- | ----------------------------------------------
+src        | Path to source directory
+dest       | Path to destination directory
+config     | Path to the Prettier config file (optional)
+extensions | Comma separated list of extensions (optional)
