@@ -13,8 +13,8 @@
   "author": "Greg Wilton",
   "license": "MIT",
   "private": true,
-  "engines" : {
-    "node" : ">=7.10.1"
+  "engines": {
+    "node": ">=7.10.1"
   },
   "dependencies": {
     "child-process-promise": "^2.2.1",
