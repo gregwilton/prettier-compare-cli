@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs-extra');
 const exec = require('child-process-promise').exec;
+const path = require('path');
 const commandExistsWithThrow = require('command-exists');
 const yargs = require('yargs');
 
@@ -57,7 +58,10 @@ async function main() {
     .help('h')
     .alias('h', 'help')
     .argv;
-  const { src, dest, config, extensions } = argv;
+  const trailingSlash = /[\\/]+$/;
+  const src = path.normalize(argv.src).replace(trailingSlash, '');
+  const dest = path.normalize(argv.dest).replace(trailingSlash, '');
+  const { config, extensions } = argv;
 
   await validateEnvironment(dest);
   await fs.emptyDir(dest);
