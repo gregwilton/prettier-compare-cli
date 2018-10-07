@@ -38,8 +38,20 @@ async function getPrettierCommand(src, dest, config, extensions) {
   return `prettier ${configArg} --write "${destGlob}"`;
 }
 
+async function compare(argv, dest) {
+  const trailingSlash = /[\\/]+$/;
+  const src = path.normalize(argv.src).replace(trailingSlash, '');
+  const { config, extensions } = argv;
+
+  await validateEnvironment();
+  await fs.copy(src, dest, { filter: getSourceFilter() });
+  await exec(await getPrettierCommand(src, dest, config, extensions));
+  await exec(`meld "${src}" "${dest}"`);
+  await fs.emptyDir(dest);
+}
+
 async function main() {
-  const argv = yargs
+  const command = yargs
     .usage('Usage: node $0 --src [str] --dest [str] [--config [str]]')
     .alias('s', 'src')
     .describe('s', 'Path to source directory')
@@ -50,22 +62,10 @@ async function main() {
     .default('e', 'js,jsx,ts,json,css,scss,less')
     .demand(['s'])
     .help('h')
-    .alias('h', 'help')
-    .argv;
+    .alias('h', 'help');
 
   return tmp
-    .withDir(async tmpDir => {
-      const trailingSlash = /[\\/]+$/;
-      const src = path.normalize(argv.src).replace(trailingSlash, '');
-      const dest = tmpDir.path;
-      const { config, extensions } = argv;
-
-      await validateEnvironment();
-      await fs.copy(src, dest, { filter: getSourceFilter() });
-      await exec(await getPrettierCommand(src, dest, config, extensions));
-      await exec(`meld "${src}" "${dest}"`);
-      await fs.emptyDir(dest);
-    })
+    .withDir(dir => compare(command.argv, dir.path))
     .catch(err => console.error(err));
 }
 
