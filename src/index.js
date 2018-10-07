@@ -12,14 +12,18 @@ function commandExists(command) {
     .catch(() => false);
 }
 
-async function validateEnvironment() {
-  if (!(await commandExists('prettier'))) {
+async function validateEnvironment(argv) {
+  const hasPrettier = await commandExists('prettier');
+  const diffTool = argv.difftool.replace(/\s.*$/, '');
+  const hasDiffTool = await commandExists(diffTool);
+
+  if (!hasPrettier) {
     console.warn('Prettier could not be found; Exiting application.');
     process.exit(1);
   }
 
-  if (!(await commandExists('meld'))) {
-    console.warn('Meld could not be found; Exiting application.');
+  if (!hasDiffTool) {
+    console.warn(`${diffTool} could not be found; Exiting application.`);
     process.exit(1);
   }
 }
@@ -43,10 +47,10 @@ async function compare(argv, dest) {
   const src = path.normalize(argv.src).replace(trailingSlash, '');
   const { config, extensions } = argv;
 
-  await validateEnvironment();
+  await validateEnvironment(argv);
   await fs.copy(src, dest, { filter: getSourceFilter() });
   await exec(await getPrettierCommand(src, dest, config, extensions));
-  await exec(`meld "${src}" "${dest}"`);
+  await exec(`${argv.difftool} "${src}" "${dest}"`);
   await fs.emptyDir(dest);
 }
 
@@ -60,6 +64,9 @@ async function main() {
     .alias('e', 'extensions')
     .describe('e', 'Comma separated list of extensions')
     .default('e', 'js,jsx,ts,json,css,scss,less')
+    .alias('d', 'difftool')
+    .describe('d', 'The directory diff command')
+    .default('d', 'meld')
     .demand(['s'])
     .help('h')
     .alias('h', 'help');
