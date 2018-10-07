@@ -20,6 +20,7 @@
     "child-process-promise": "^2.2.1",
     "command-exists": "^1.2.2",
     "fs-extra": "^4.0.2",
+    "tmp-promise": "^1.0.5",
     "yargs": "^10.0.3"
   }
 }

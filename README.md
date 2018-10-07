@@ -21,20 +21,20 @@ The following applications must be available on the path:
 Run the comparison using a specific configuration:
 
 ```
-prettier-compare --src /Git/my-project --dest /Temp/output --config /Git/my-project/prettier.config.js
+prettier-compare --src /Git/my-project --config /Git/my-project/prettier.config.js
 ```
 
 Not passing the `config` argument will call Prettier with the `no-config`
 option.
 
 ```
-prettier-compare --src /Git/my-project --dest /Temp/output
+prettier-compare --src /Git/my-project
 ```
 
 Specify that Prettier should only be called on js and jsx files.
 
 ```
-prettier-compare --src /Git/my-project --dest /Temp/output --extensions js,jsx
+prettier-compare --src /Git/my-project --extensions js,jsx
 ```
 
 ## Command line arguments
@@ -42,6 +42,5 @@ prettier-compare --src /Git/my-project --dest /Temp/output --extensions js,jsx
 Argument   | Description
 ---------- | ----------------------------------------------
 src        | Path to source directory
-dest       | Path to destination directory
 config     | Path to the Prettier config file (optional)
 extensions | Comma separated list of extensions (optional)
