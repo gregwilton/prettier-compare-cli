@@ -53,3 +53,16 @@ difftool   | The directory diff command (optional)
 Any program where the pattern `$difftool $directoryA $directoryB` will open a
 directory diff should work. Programs that output the diff to stdout won't
 current work as the output isn't being captured.
+
+## Configuring Meld
+
+This program will exclude *git.* and *node_modules* from being copied and
+processed by Prettier but it can't exclude those directories from appearing in
+the resulting diff. That setting needs to be made in Meld by going into
+preferences and adding a new pattern to the file filters.
+
+Name         | Pattern
+------------ | ------------
+Node modules | node_modules
+
+(The *.git* directory should already be getting excluded).
