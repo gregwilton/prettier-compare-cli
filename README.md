@@ -18,7 +18,7 @@ yarn global add git+https://github.com/gregwilton/prettier-compare.git
 
 The following applications must be available on the path:
 - [Prettier](https://github.com/prettier/prettier)
-- [Meld](http://meldmerge.org/) (if the `--difftool` argument isn't provided)
+- [Meld](http://meldmerge.org/) (if the `difftool` argument isn't provided)
 
 ## Example usage
 
@@ -49,3 +49,7 @@ src        | Path to source directory
 config     | Path to the Prettier config file (optional)
 extensions | Comma separated list of extensions (optional)
 difftool   | The directory diff command (optional)
+
+Any program where the pattern `$difftool $directoryA $directoryB` will open a
+directory diff should work. Programs that output the diff to stdout won't
+current work as the output isn't being captured.
