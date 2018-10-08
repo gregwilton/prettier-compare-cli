@@ -1,5 +1,5 @@
 {
-  "name": "prettier-compare",
+  "name": "prettier-compare-cli",
   "version": "1.0.4",
   "description": "Command line tool compare Prettier output for an entire project",
   "main": "src/index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gregwilton/prettier-compare.git"
+    "url": "https://github.com/gregwilton/prettier-compare-cli.git"
   },
   "author": "Greg Wilton",
   "license": "MIT",
