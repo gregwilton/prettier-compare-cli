@@ -70,10 +70,15 @@ async function main() {
     .demand(['s'])
     .help('h')
     .alias('h', 'help');
+  const tempDir = await tmp.dir({ unsafeCleanup: true });
 
-  return tmp
-    .withDir(dir => compare(command.argv, dir.path))
-    .catch(err => console.error(err));
+  try {
+    await compare(command.argv, tempDir.path);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    tempDir.cleanup();
+  }
 }
 
 main();
