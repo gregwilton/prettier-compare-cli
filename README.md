@@ -1,4 +1,4 @@
-# Compare changes if Prettier was run on a project
+# Load a directory diff of changes Prettier would make
 
 The [Prettier](https://prettier.io/) code formatter can list which files will
 change but does not provide an easy way to inspect all changes that will be
@@ -12,8 +12,10 @@ different diff program can be specified in the arguments.
 
 ## Installation
 
-```
-yarn global add git+https://github.com/gregwilton/prettier-compare.git
+```bash
+npm install prettier-compare-cli --global
+# Or if using Yarn:
+yarn global add prettier-compare-cli
 ```
 
 The following applications must be available on the path:
@@ -24,20 +26,20 @@ The following applications must be available on the path:
 
 Run the comparison using a specific configuration:
 
-```
+```bash
 prettier-compare --src /Git/my-project --config /Git/my-project/prettier.config.js
 ```
 
 Not passing the `config` argument will call Prettier with the `no-config`
 option.
 
-```
+```bash
 prettier-compare --src /Git/my-project
 ```
 
 Specify that Prettier should only be called on js and jsx files.
 
-```
+```bash
 prettier-compare --src /Git/my-project --extensions js,jsx
 ```
 
