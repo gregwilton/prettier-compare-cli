@@ -1,6 +1,6 @@
 {
   "name": "prettier-compare-cli",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Command line tool compare Prettier output for an entire project",
   "main": "src/index.js",
   "bin": {

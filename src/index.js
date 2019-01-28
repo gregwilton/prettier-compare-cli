@@ -35,7 +35,7 @@ function getSourceFilter() {
   return filter;
 }
 
-async function getPrettierCommand(src, dest, config, extensions) {
+async function getPrettierCommand(dest, config, extensions) {
   const configArg = config ? `--config "${config}"` : '--no-config';
   const destGlob = `${dest}/**/*.{${extensions}}`;
 
@@ -49,14 +49,14 @@ async function compare(argv, dest) {
 
   await validateEnvironment(argv);
   await fs.copy(src, dest, { filter: getSourceFilter() });
-  await exec(await getPrettierCommand(src, dest, config, extensions));
+  await exec(await getPrettierCommand(dest, config, extensions));
   await exec(`${argv.difftool} "${src}" "${dest}"`);
   await fs.emptyDir(dest);
 }
 
 async function main() {
   const command = yargs
-    .usage('Usage: node $0 --src [str] --dest [str] [--config [str]]')
+    .usage('Usage: node $0 --src [str] [--config [str]]')
     .alias('s', 'src')
     .describe('s', 'Path to source directory')
     .alias('c', 'config')
