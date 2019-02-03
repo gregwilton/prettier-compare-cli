@@ -63,7 +63,7 @@ async function main() {
     .describe('c', 'Path to the Prettier config file')
     .alias('e', 'extensions')
     .describe('e', 'Comma separated list of extensions')
-    .default('e', 'js,jsx,ts,json,css,scss,less')
+    .default('e', 'js,jsx,ts,tsx,json,css,scss,less')
     .alias('d', 'difftool')
     .describe('d', 'The directory diff command')
     .default('d', 'meld')
